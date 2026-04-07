@@ -22,6 +22,7 @@
 								<th> Email </th>
 								<th> &nbsp; </th>
 								<th> &nbsp; </th>
+								<th> &nbsp; </th>
 							</tr>
 							</thead>
 							<% let i=0; %>
@@ -30,6 +31,18 @@
 								<td><%= allUsers[i].first_name %></td>
 								<td><%= allUsers[i].last_name %></td>
 								<td><%= allUsers[i].email %></td>
+								<td>
+                                 <% if (allUsers[i].image_id) { %>
+                                 <img src="https://res.cloudinary.com/<%= cloud_name %>/image/upload/w_100,h_100,c_fit/<%= allUsers[i].image_id %>" width="100" height="100"/>
+                                 <a href="/deleteUserImage?id=<%= allUsers[i].user_id %>">Delete Image</a>
+                                <% } else { %>
+                                    <form action="/setUserPic" method="post" enctype="multipart/form-data">
+                                    <input type="hidden" name="user_id" value="<%= allUsers[i].user_id %>"/>
+                                    <input type="file" name="image"/>
+                                    <button type="submit">Upload Image</button>
+                                    </form>
+                                    <% } %>
+                                </td>
 								<td><a href="/deleteUser?id=<%= allUsers[i].user_id %>">
 									<span class="icon is-small">
 										<i class="fas fa-user-times"></i>
